@@ -1,0 +1,149 @@
+.page-content{
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page-content .container{
+    --padding: 3px;
+    --border-radius: 30px;
+    width: 400px;
+    height: 600px;
+    padding: var(--padding);
+    border-radius: var(--border-radius);
+    background: linear-gradient(var(--gradient-angle), #f9e7fe, #dafcfc);
+    animation: rotate-gradient 5s linear 0s infinite;
+    box-shadow: 4px 4px 10px #00000033;
+}
+.page-content .container .content{
+    width: calc(100% - 100px);
+    height: calc(100% - 100px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: column nowrap;
+    padding: 50px;
+    border-radius: calc(var(--border-radius) - var(--padding));
+    background: #fff;
+}
+.page-content .container .content h1{
+    width: 100%;
+    height: fit-content;
+    font-family: var(--strong-font);
+    font-size: 30px;
+    text-align: center;
+}
+.page-content .container .content .input-box{
+    width: 100%;
+    height: fit-content;
+}
+.page-content .container .content .input-box label{
+    width: 100%;
+    height: fit-content;
+    font-size: 18px;
+    color: var(--text-color);
+    opacity: 0;
+    transition: .3s ease;
+}
+.page-content .container .content .input-box:has(input:focus) label,
+.page-content .container .content .input-box:has(input:not(:placeholder-shown)) label{
+    opacity: 1;
+}
+.page-content .container .content .input-box input{
+    width: 100%;
+    height: fit-content;
+    font-size: 22px;
+    border: none;
+}
+.page-content .container .content .input-box input::placeholder{
+    color: var(--text-color);
+    transition: .3s ease;
+}
+.page-content .container .content .input-box input:focus::placeholder{
+    opacity: 0;
+}
+.page-content .container .content .output{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.page-content .container .content button{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 100px;
+    background: linear-gradient(var(--gradient-angle), #f9e7fe, #dafcfc);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: var(--strong-font);
+}
+.page-content .container .content button::after{
+    content: "Submit";
+}
+.page-content .container .content[awaiting] button{
+    cursor: default;
+}
+.page-content .container .content[awaiting] button::after{
+    content: none;
+}
+.page-content .container .content:not([awaiting]) button svg{
+    display: none;
+}
+.page-content .container .content button svg{
+    width: auto;
+    height: 30px;
+}
+.page-content .container .content button svg rect.col-1{
+    animation: loading .9s ease-in-out 0s infinite;
+}
+.page-content .container .content button svg rect.col-2{
+    animation: loading .9s ease-in-out -.3s infinite;
+}
+.page-content .container .content button svg rect.col-3{
+    animation: loading .9s ease-in-out -.6s infinite;
+}
+.page-content .container .content a{
+    width: fit-content;
+    height: fit-content;
+    line-height: 1;
+    font-size: 18px;
+}
+
+
+@property --gradient-angle{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes rotate-gradient{
+    0%{
+        --gradient-angle: 0deg;
+    }
+    100%{
+        --gradient-angle: 360deg;
+    }
+}
+
+@keyframes loading{
+    0%{
+        transform: translateY(-10%);
+    }
+    50%{
+        transform: translateY(10%);
+    }
+    100%{
+        transform: translateY(-10%);
+    }
+}

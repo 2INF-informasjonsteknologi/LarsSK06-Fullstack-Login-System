@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Phudu:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
+
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    flex-grow: 0;
+    flex-shrink: 0;
+    font-family: "Oswald";
+    outline: none;
+}
+
+:root{
+    --header-height: 80px;
+    --strong-font: "Phudu";
+    --text-color: #000;
+    --transparent: #00000044;
+}
+
+a{
+    color: inherit;
+}
+
+header{
+    width: 100%;
+    height: var(--header-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+header .section{
+    width: 0;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1;
+}
+header .section .button{
+    width: fit-content;
+    height: fit-content;
+    padding: 0 4px;
+    font-size: 20px;
+    font-family: var(--strong-font);
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+footer{
+    width: calc(100% - 600px);
+    height: fit-content;
+    padding: 100px 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+footer .column{
+    width: fit-content;
+    height: fit-content;
+}
+footer .column h1{
+    width: 100%;
+    height: fit-content;
+    min-width: fit-content;
+    margin: 6px 0;
+    font-family: var(--strong-font);
+    font-size: 22px;
+    font-weight: 500;
+}
+footer .column p{
+    width: 100%;
+    height: fit-content;
+    min-width: fit-content;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.1;
+}
