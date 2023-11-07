@@ -1,23 +1,18 @@
+fetch("/api/logout");
+
 window.addEventListener("load", () => {
-    const content = document.querySelector(".page-content .container .content");
-    content.querySelector("button").addEventListener("click", () => {
-        if(!content.hasAttribute("awaiting")) submitForm();
-    });
+    const container = document.querySelector(".page-content .container");
+    const content = container.querySelector(".content");
     content.querySelectorAll("input").forEach(i => i.addEventListener("keypress", (event) => {
-        if(event.key != "Enter") return;
-        if(content.hasAttribute("awaiting")) return;
-        submitForm();
+        if(event.key == "Enter") submitForm();
     }));
-    function log(message){
-        const output = content.querySelector(".output");
-        output.innerText = message;
-    }
+    content.querySelector("button").addEventListener("click", () => submitForm());
     async function submitForm(){
-        content.setAttribute("awaiting", "");
         const email = content.querySelector(".input-box.email input").value;
         const username = content.querySelector(".input-box.username input").value;
         const fullName = content.querySelector(".input-box.full-name input").value;
         const password = content.querySelector(".input-box.password input").value;
+        setLoading(true);
         const response = await fetch("/api/signup", {
             method: "POST",
             headers: {
@@ -30,12 +25,26 @@ window.addEventListener("load", () => {
                 password
             })
         });
-        const data = await response.json();
-        if(content.hasAttribute("awaiting")) content.removeAttribute("awaiting");
-        if(!response.ok){
-            log(data.message);
+        const {message} = await response.json();
+        if(!message){
+            log("Unknown error occured.");
             return;
         }
-        window.location.href = "/";
+        if(response.ok){
+            window.location.href = "/login";
+            return;
+        }
+        log(message);
+        setLoading(false);
+    }
+    function log(message){
+        const output = container.querySelector(".output");
+        output.innerText = message;
+    }
+    function setLoading(loading){
+        if(loading) container.setAttribute("loading", "");
+        else{
+            if(container.hasAttribute("loading")) container.removeAttribute("loading");
+        }
     }
 });

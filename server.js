@@ -28,6 +28,8 @@
 
 // Variables
 
+    const saltRounds = 10;
+
     const frontendFolder = __dirname + "/frontend";
 
 
@@ -69,10 +71,13 @@
                 });
                 return;
             }
-            request.session.user = getUserByUsername(username);
+            let user = structuredClone(getUserByUsername(username));
+            if(user.hasOwnProperty("password")) delete user.password;
+            request.session.user = user;
             response.status(200).send({
                 message: "Successful login."
             });
+            console.log(user.username + " logged in");
         });
 
         app.post("/api/signup", async (request, response) => {
@@ -105,7 +110,7 @@
                 email,
                 username,
                 fullName,
-                password: await bcrypt.hash(password, 10)
+                password: await bcrypt.hash(password, saltRounds)
             });
             fs.writeFileSync(
                 "./users.json",
@@ -125,13 +130,6 @@
             response.status(200).send({
                 message: "User successfully logged out."
             });
-        });
-
-    // Special pages for fallback
-
-        app.get("/login", (request, response, next) => {
-            if(request.session.hasOwnProperty("user")) delete request.session.user;
-            next();
         });
 
     // Fallback & frontend
@@ -162,12 +160,14 @@
 
 // Functions
 
-    function getUserByUsername(query){
-        if(users.some(user => user.username == query)) return users.find(user => user.username == query);
-        return false;
-    }
+    // User fetch
 
-    function getUserByEmail(query){
-        if(users.some(user => user.email == query)) return users.find(user => user.email == query);
-        return false;
-    }
+        function getUserByUsername(query){
+            if(users.some(user => user.username == query)) return users.find(user => user.username == query);
+            return false;
+        }
+
+        function getUserByEmail(query){
+            if(users.some(user => user.email == query)) return users.find(user => user.email == query);
+            return false;
+        }

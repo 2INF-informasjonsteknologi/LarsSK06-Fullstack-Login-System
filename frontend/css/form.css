@@ -12,9 +12,31 @@
     height: 600px;
     padding: var(--padding);
     border-radius: var(--border-radius);
-    background: linear-gradient(var(--gradient-angle), #f9e7fe, #dafcfc);
+    background: linear-gradient(var(--gradient-angle), #1a2980, #26d0ce);
     animation: rotate-gradient 5s linear 0s infinite;
     box-shadow: 4px 4px 10px #00000033;
+}
+.page-content .container .loader{
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: calc(var(--border-radius) - var(--padding));
+    background: #fff;
+}
+.page-content .container[loading] .loader{
+    display: flex;
+}
+.page-content .container .loader .icon{
+    width: 140px;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    border: 3px solid #1a2980;
+    border-top: 3px solid #26d0ce;
+    border-bottom: 3px solid #26d0ce;
+    animation: rotate 3s linear 0s infinite;
 }
 .page-content .container .content{
     width: calc(100% - 100px);
@@ -26,6 +48,9 @@
     padding: 50px;
     border-radius: calc(var(--border-radius) - var(--padding));
     background: #fff;
+}
+.page-content .container[loading] .content{
+    display: none;
 }
 .page-content .container .content h1{
     width: 100%;
@@ -82,36 +107,12 @@
     align-items: center;
     border: none;
     border-radius: 100px;
-    background: linear-gradient(var(--gradient-angle), #f9e7fe, #dafcfc);
+    background: linear-gradient(135deg, #1a2980, #26d0ce);
     cursor: pointer;
     font-size: 18px;
     font-weight: 500;
     font-family: var(--strong-font);
-}
-.page-content .container .content button::after{
-    content: "Submit";
-}
-.page-content .container .content[awaiting] button{
-    cursor: default;
-}
-.page-content .container .content[awaiting] button::after{
-    content: none;
-}
-.page-content .container .content:not([awaiting]) button svg{
-    display: none;
-}
-.page-content .container .content button svg{
-    width: auto;
-    height: 30px;
-}
-.page-content .container .content button svg rect.col-1{
-    animation: loading .9s ease-in-out 0s infinite;
-}
-.page-content .container .content button svg rect.col-2{
-    animation: loading .9s ease-in-out -.3s infinite;
-}
-.page-content .container .content button svg rect.col-3{
-    animation: loading .9s ease-in-out -.6s infinite;
+    color: #fff;
 }
 .page-content .container .content a{
     width: fit-content;
@@ -145,5 +146,14 @@
     }
     100%{
         transform: translateY(-10%);
+    }
+}
+
+@keyframes rotate{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
     }
 }
